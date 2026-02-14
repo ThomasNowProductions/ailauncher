@@ -1,6 +1,7 @@
 use anyhow::Result;
 use colored::Colorize;
 use dialoguer::{theme::ColorfulTheme, Select};
+use figlet_rs::FIGfont;
 use std::process::Command;
 use which::which;
 
@@ -86,44 +87,20 @@ fn run_tool(command: &str) -> Result<()> {
 
 fn print_banner() {
     println!();
-    println!(
-        "{}",
-        "  ██████╗██╗██╗    ████████╗███████╗ ██████╗".cyan().bold()
-    );
-    println!(
-        "{}",
-        " ██╔════╝██║██║    ╚══██╔══╝██╔═══██╗██╔══██╗"
-            .cyan()
-            .bold()
-    );
-    println!(
-        "{}",
-        " ██║     ██║██║       ██║   ██║   ██║██████╔╝"
-            .cyan()
-            .bold()
-    );
-    println!(
-        "{}",
-        " ██║     ██║██║       ██║   ██║   ██║██╔══██╗"
-            .cyan()
-            .bold()
-    );
-    println!(
-        "{}",
-        " ╚██████╗██║██║       ██║   ╚██████╔╝██║  ██║"
-            .cyan()
-            .bold()
-    );
-    println!(
-        "{}",
-        "  ╚═════╝╚═╝╚═╝       ╚═╝    ╚═════╝ ╚═╝  ╚═╝"
-            .cyan()
-            .bold()
-    );
+    let font = FIGfont::standard().unwrap();
+    let figure = font.convert("AI SELECT");
+    if let Some(ascii) = figure {
+        let colored_ascii: String = ascii
+            .to_string()
+            .lines()
+            .map(|line| format!("  {}\n", line.cyan().bold()))
+            .collect();
+        print!("{}", colored_ascii);
+    }
     println!();
     println!(
         "{}",
-        "    AI Agent Launcher - Select your AI tool"
+        "      AI Tool Launcher - Select your AI tool"
             .white()
             .dimmed()
     );
