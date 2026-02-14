@@ -66,7 +66,7 @@ fn get_tools() -> Vec<AiTool> {
         },
         AiTool {
             name: "Codex",
-            command: "Codex",
+            command: "codex",
             description: "CLI made by OpenAI",
         },
     ]
