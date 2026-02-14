@@ -154,21 +154,16 @@ fn main() -> Result<()> {
     print_banner();
 
     let tools = get_tools();
-    let installed: Vec<(AiTool, bool)> = tools
+    let installed: Vec<AiTool> = tools
         .into_iter()
-        .map(|t| {
-            let installed = check_installed(t.command);
-            (t, installed)
-        })
+        .filter(|t| check_installed(t.command))
         .collect();
 
-    let has_installed = installed.iter().any(|(_, installed)| *installed);
-
-    if !has_installed {
+    if installed.is_empty() {
         println!("{}", "  No AI tools found on your system.".yellow());
         println!();
         println!("  Install one of the following tools to get started:");
-        for (tool, _) in installed {
+        for tool in get_tools() {
             println!("    • {} - {}", tool.name.white().bold(), tool.description);
         }
         println!();
@@ -179,17 +174,7 @@ fn main() -> Result<()> {
 
     let items: Vec<String> = installed
         .iter()
-        .map(|(tool, installed)| {
-            if *installed {
-                format!("  {} - {}", tool.name.white().bold(), tool.description)
-            } else {
-                format!(
-                    "  {} - {} (not installed)",
-                    tool.name.dimmed(),
-                    tool.description.dimmed()
-                )
-            }
-        })
+        .map(|tool| format!("  {} - {}", tool.name.white().bold(), tool.description))
         .collect();
 
     let selection = Select::with_theme(&ColorfulTheme::default())
@@ -198,13 +183,7 @@ fn main() -> Result<()> {
         .items(&items)
         .interact()?;
 
-    let (tool, installed) = &installed[selection];
-
-    if !installed {
-        println!("\n  {} is not installed or not in PATH.", tool.name);
-        println!("  Please install it first.\n");
-        return Ok(());
-    }
+    let tool = &installed[selection];
 
     println!("\n  Launching {}...\n", tool.name.cyan().bold());
 
