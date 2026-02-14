@@ -44,28 +44,8 @@ fn get_tools() -> Vec<AiTool> {
             description: "Anthropic Claude AI assistant",
         },
         AiTool {
-            name: "Aider",
-            command: "aider",
-            description: "AI pair programming in your terminal",
-        },
-        AiTool {
-            name: "Cursor",
-            command: "cursor",
-            description: "AI-powered code editor",
-        },
-        AiTool {
-            name: "Continue",
-            command: "continue",
-            description: "Open source AI code assistant",
-        },
-        AiTool {
-            name: "Cody",
-            command: "cody",
-            description: "Sourcegraph AI coding assistant",
-        },
-        AiTool {
             name: "Copilot CLI",
-            command: "github-copilot-cli",
+            command: "copilot-cli",
             description: "GitHub Copilot for terminal",
         },
         AiTool {
@@ -79,14 +59,14 @@ fn get_tools() -> Vec<AiTool> {
             description: "Local LLM runner",
         },
         AiTool {
-            name: "Mistral",
-            command: "mistral",
+            name: "Mistral Vibe CLI",
+            command: "vibe",
             description: "Mistral AI assistant",
         },
         AiTool {
-            name: "GPT CLI",
-            command: "chatgpt",
-            description: "ChatGPT CLI interface",
+            name: "Codex",
+            command: "Codex",
+            description: "CLI made by OpenAI",
         },
     ]
 }
