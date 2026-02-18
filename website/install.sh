@@ -4,7 +4,7 @@ set -e
 
 INSTALL_DIR="$HOME/.local/bin"
 BINARY_NAME="airun"
-REPO_URL="https://github.com/thomasboom/AIRUN"
+REPO_URL="https://github.com/ThomasNowProductions/AIRun"
 
 echo -e "\n\033[36m  AI Agent Launcher Installer\033[0m\n"
 echo "  Launch any AI CLI in seconds"

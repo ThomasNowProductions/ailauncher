@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2021"
 description = "Launch any AI CLI in seconds"
 license = "AGPL-3.0-only"
-repository = "https://github.com/thomasboom/AIRUN"
-homepage = "https://github.com/thomasboom/AIRUN"
+repository = "https://github.com/ThomasNowProductions/AIRun"
+homepage = "https://github.com/ThomasNowProductions/AIRun"
 
 [[bin]]
 name = "airun"
