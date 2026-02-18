@@ -87,7 +87,7 @@ fn print_banner() {
             println!("  {}", line.cyan().bold());
         }
     }
-    println!("\n  AI Tool Launcher - Select your AI tool\n");
+    println!("\n  Launch any AI CLI in seconds\n");
 }
 
 fn main() -> Result<()> {

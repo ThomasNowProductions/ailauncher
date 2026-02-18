@@ -6,6 +6,8 @@ INSTALL_DIR="$HOME/.local/bin"
 BINARY_NAME="ai"
 
 echo -e "\n\033[36m  AI Agent Launcher Uninstaller\033[0m\n"
+echo "  Launch any AI CLI in seconds"
+echo ""
 
 if [ -f "$INSTALL_DIR/$BINARY_NAME" ]; then
     rm "$INSTALL_DIR/$BINARY_NAME"

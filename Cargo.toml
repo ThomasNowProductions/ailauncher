@@ -2,7 +2,7 @@
 name = "ailauncher"
 version = "0.1.0"
 edition = "2021"
-description = "Interactive AI provider and model launcher for terminal workflows"
+description = "Launch any AI CLI in seconds"
 license = "AGPL-3.0-only"
 repository = "https://github.com/thomasboom/AI-Select"
 homepage = "https://github.com/thomasboom/AI-Select"

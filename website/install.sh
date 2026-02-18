@@ -7,6 +7,8 @@ BINARY_NAME="ai"
 REPO_URL="https://github.com/your-username/ai-launcher"
 
 echo -e "\n\033[36m  AI Agent Launcher Installer\033[0m\n"
+echo "  Launch any AI CLI in seconds"
+echo ""
 
 if [ -d "$INSTALL_DIR" ]; then
     echo "  Install directory exists: $INSTALL_DIR"
