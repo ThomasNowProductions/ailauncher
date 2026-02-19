@@ -1,4 +1,5 @@
-use anyhow::Result;
+use anyhow::{bail, Result};
+use clap::Parser;
 use colored::Colorize;
 use dialoguer::{theme::ColorfulTheme, FuzzySelect};
 use figlet_rs::FIGfont;
@@ -71,8 +72,19 @@ const TOOLS: &[AiTool] = &[
     },
 ];
 
-fn run_tool(command: &str) -> Result<()> {
+#[derive(Parser)]
+#[command(name = "airun")]
+#[command(about = "Launch any AI CLI in seconds", long_about = None)]
+#[command(version)]
+struct Args {
+    tool: Option<String>,
+    #[arg(trailing_var_arg = true, allow_hyphen_values = true)]
+    args: Vec<String>,
+}
+
+fn run_tool(command: &str, args: &[String]) -> Result<()> {
     let mut child = Command::new(command)
+        .args(args)
         .env("TERM", "xterm-256color")
         .spawn()?;
     child.wait()?;
@@ -90,14 +102,44 @@ fn print_banner() {
     println!("\n  Launch any AI CLI in seconds\n");
 }
 
+fn find_tool_by_name(name: &str) -> Option<AiTool> {
+    let name_lower = name.to_lowercase();
+    TOOLS
+        .iter()
+        .find(|t| {
+            t.command == name_lower
+                || t.name.to_lowercase() == name_lower
+                || t.name.to_lowercase().replace(' ', "") == name_lower
+                || t.name.to_lowercase().replace(" cli", "") == name_lower
+        })
+        .copied()
+}
+
 fn main() -> Result<()> {
-    print_banner();
+    let args = Args::parse();
 
     let installed: Vec<AiTool> = TOOLS
         .par_iter()
         .filter(|t| which(t.command).is_ok())
         .copied()
         .collect();
+
+    if let Some(tool_name) = args.tool {
+        let tool = match find_tool_by_name(&tool_name) {
+            Some(t) => t,
+            None => bail!("Unknown tool: {}", tool_name),
+        };
+
+        if !installed.iter().any(|t| t.command == tool.command) {
+            bail!("Tool '{}' is not installed or not in PATH", tool.name);
+        }
+
+        println!("Launching {}...\n", tool.name.cyan().bold());
+        run_tool(tool.command, &args.args)?;
+        return Ok(());
+    }
+
+    print_banner();
 
     if installed.is_empty() {
         println!("{}", "  No AI tools found on your system.".yellow());
@@ -122,7 +164,7 @@ fn main() -> Result<()> {
 
     let tool = &installed[selection];
     println!("\n  Launching {}...\n", tool.name.cyan().bold());
-    run_tool(tool.command)?;
+    run_tool(tool.command, &[])?;
     println!("\n  Returned from {}.\n", tool.name.cyan());
     Ok(())
 }
